@@ -7,6 +7,10 @@
 #include <QFinalState>
 #include <QDebug>
 #include <QTimer>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QUrl>
+
 
 class ScanStateMachine : public QObject
 {
@@ -15,19 +19,31 @@ class ScanStateMachine : public QObject
     public:
         explicit ScanStateMachine(QObject *parent = nullptr);
 
-    private:
-        QState *idleState = nullptr;
-        QState *sensorTriggeredState = nullptr;
-        QState *processingState = nullptr;
-        QState *saveDataState = nullptr;
-        QState *greenLightState = nullptr;
-
-
     signals:
+        void sensorTriggered();
+        void sensorReleased();
+        void processingDone();
+        void dataSaved();
+        void resetToIdle();
+
+    public slots:
+        void onSensorTriggered();
+        void onSensorReleased();
+        void onProcessingDone();
+        void onDataSaved();
 
     private:
+        void setupStates();
+        void sendRequest(const QString &cmd);
+
         QStateMachine m_stateMachine;
+        QState *idleState;
+        QState *sensorTriggeredState;
+        QState *processingState;
+        QState *saveDataState;
+        QState *greenLightState;
         QTimer m_timer;
+        QNetworkAccessManager m_manager;
 
 };
 

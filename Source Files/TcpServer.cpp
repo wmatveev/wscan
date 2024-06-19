@@ -3,6 +3,7 @@
 //
 
 #include "TcpServer.hpp"
+#include "ScanStateMachine.hpp"
 
 
 /**
@@ -11,7 +12,8 @@
  */
 TcpServer::TcpServer(QObject *parent)
         : QObject{parent},
-          m_server{new QTcpServer(this)}
+          m_server{new QTcpServer(this)},
+          m_stateMachine{new ScanStateMachine(this)}
 {
     connect(this, &TcpServer::sendInfo, this, &TcpServer::ShowInfo);
 
@@ -25,6 +27,10 @@ TcpServer::TcpServer(QObject *parent)
         emit sendInfo(QString("The server is running. Listening on the port %1").arg(m_server->serverPort()));
         connect(m_server, &QTcpServer::newConnection, this, &TcpServer::AcceptNewConnection);
     }
+
+    // Connect TcpServer signals to ScanStateMachine slots
+    connect(this, &TcpServer::sensorTriggered, m_stateMachine, &ScanStateMachine::onSensorTriggered);
+    connect(this, &TcpServer::sensorReleased, m_stateMachine, &ScanStateMachine::onSensorReleased);
 }
 
 /**
@@ -58,6 +64,14 @@ int TcpServer::AcceptDataFromClient()
     stream >> byte;
 
     emit sendInfo( QString(static_cast<char>(byte)) );
+
+    if (byte == '0') {
+        emit sensorTriggered();
+    }
+    else if (byte == '1') {
+        emit sensorReleased();
+    }
+
 
     return 0;
 }

@@ -10,6 +10,7 @@
 #include <QTcpSocket>
 
 #include "ITcpServer.hpp"
+#include "ScanStateMachine.hpp"
 
 class TcpServer : public QObject, public ITcpServer
 {
@@ -21,9 +22,12 @@ class TcpServer : public QObject, public ITcpServer
     private:
         QTcpServer* m_server = nullptr;
         QTcpSocket* m_socket = nullptr;
+        ScanStateMachine *m_stateMachine;
 
     signals:
         void sendInfo(QString);
+        void sensorTriggered();
+        void sensorReleased();
 
     public slots:
         int AcceptNewConnection()  override;
