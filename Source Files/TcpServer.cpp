@@ -51,6 +51,14 @@ int TcpServer::AcceptNewConnection()
 
 int TcpServer::AcceptDataFromClient()
 {
+    unsigned char byte = 0xFF;
+
+    QDataStream stream{m_socket};
+
+    stream >> byte;
+
+    emit sendInfo( QString(static_cast<char>(byte)) );
+
     return 0;
 }
 

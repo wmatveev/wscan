@@ -12,18 +12,22 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS StateMachine)
 
 add_executable(wscan
         "Source Files/main.cpp"
         "Source Files/TcpServer.cpp"
+        "Source Files/ScanStateMachine.cpp"
 
         "Header Files/Includes/TcpServer.hpp"
+        "Header Files/Includes/ScanStateMachine.hpp"
 
         "Header Files/Interfaces/ITcpServer.hpp"
 )
 
 target_link_libraries(wscan Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(wscan Qt${QT_VERSION_MAJOR}::Network)
+target_link_libraries(wscan Qt${QT_VERSION_MAJOR}::StateMachine)
 
 # add path to header files
 target_include_directories(wscan PUBLIC "./Header Files/Includes/")
