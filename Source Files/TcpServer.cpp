@@ -12,7 +12,7 @@
 TcpServer::TcpServer(QObject *parent)
         : QObject{parent},
           m_server{new QTcpServer(this)},
-          m_laser{new LaserSensor(this)}
+          m_laser{new LaserController(this)}
 {
     connect(this, &TcpServer::sendInfo, this, &TcpServer::ShowInfo);
 
@@ -27,8 +27,8 @@ TcpServer::TcpServer(QObject *parent)
         connect(m_server, &QTcpServer::newConnection, this, &TcpServer::AcceptNewConnection);
     }
 
-    connect(this, &TcpServer::laserTriggered, m_laser, &LaserSensor::onLaserTriggered);
-    connect(this, &TcpServer::laserReleased,  m_laser, &LaserSensor::onLaserReleased);
+    connect(this, &TcpServer::laserTriggered, m_laser, &LaserController::onLaserTriggered);
+    connect(this, &TcpServer::laserReleased,  m_laser, &LaserController::onLaserReleased);
 }
 
 /**

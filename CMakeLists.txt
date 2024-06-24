@@ -19,10 +19,12 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS StateMachine)
 add_executable(wscan
         "Source Files/main.cpp"
         "Source Files/TcpServer.cpp"
-        "Source Files/LaserSensor.cpp"
+        "Source Files/LaserController.cpp"
+        "Source Files/ScannerController.cpp"
 
         "Header Files/Includes/TcpServer.hpp"
-        "Header Files/Includes/LaserSensor.hpp"
+        "Header Files/Includes/LaserController.hpp"
+        "Header Files/Includes/ScannerController.hpp"
 
         "Header Files/Interfaces/ITcpServer.hpp"
 )

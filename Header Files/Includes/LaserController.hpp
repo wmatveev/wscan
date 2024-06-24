@@ -2,18 +2,18 @@
 // Created by wmatveev on 24.06.2024.
 //
 
-#ifndef WSCAN_LASERSENSOR_HPP
-#define WSCAN_LASERSENSOR_HPP
+#ifndef WSCAN_LASERCONTROLLER_HPP
+#define WSCAN_LASERCONTROLLER_HPP
 
 #include <QObject>
 #include <QTimer>
 
-class LaserSensor : public QObject
+class LaserController : public QObject
 {
     Q_OBJECT
 
     public:
-        explicit LaserSensor(QObject *parent = nullptr);
+        explicit LaserController(QObject *parent = nullptr);
 
     public slots:
         void onLaserTriggered(unsigned char);
@@ -24,4 +24,4 @@ class LaserSensor : public QObject
 };
 
 
-#endif //WSCAN_LASERSENSOR_HPP
+#endif //WSCAN_LASERCONTROLLER_HPP

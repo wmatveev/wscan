@@ -10,7 +10,7 @@
 #include <QTcpSocket>
 
 #include "ITcpServer.hpp"
-#include "LaserSensor.hpp"
+#include "LaserController.hpp"
 
 
 class TcpServer : public QObject, public ITcpServer
@@ -23,7 +23,7 @@ class TcpServer : public QObject, public ITcpServer
     private:
         QTcpServer  *m_server = nullptr;
         QTcpSocket  *m_socket = nullptr;
-        LaserSensor *m_laser  = nullptr;
+        LaserController *m_laser  = nullptr;
 
 
     signals:
