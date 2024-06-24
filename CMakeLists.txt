@@ -15,6 +15,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS StateMachine)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS SerialPort)
 
 add_executable(wscan
         "Source Files/main.cpp"
@@ -32,6 +33,7 @@ add_executable(wscan
 target_link_libraries(wscan Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(wscan Qt${QT_VERSION_MAJOR}::Network)
 target_link_libraries(wscan Qt${QT_VERSION_MAJOR}::StateMachine)
+target_link_libraries(wscan Qt${QT_VERSION_MAJOR}::SerialPort)
 
 # add path to header files
 target_include_directories(wscan PUBLIC "./Header Files/Includes/")
