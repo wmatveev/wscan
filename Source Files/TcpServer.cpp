@@ -3,7 +3,6 @@
 //
 
 #include "TcpServer.hpp"
-#include "ScanStateMachine.hpp"
 
 
 /**
@@ -13,7 +12,7 @@
 TcpServer::TcpServer(QObject *parent)
         : QObject{parent},
           m_server{new QTcpServer(this)},
-          m_stateMachine{new ScanStateMachine(this)}
+          m_laser{new LaserSensor(this)}
 {
     connect(this, &TcpServer::sendInfo, this, &TcpServer::ShowInfo);
 
@@ -28,9 +27,8 @@ TcpServer::TcpServer(QObject *parent)
         connect(m_server, &QTcpServer::newConnection, this, &TcpServer::AcceptNewConnection);
     }
 
-    // Connect TcpServer signals to ScanStateMachine slots
-    connect(this, &TcpServer::sensorTriggered, m_stateMachine, &ScanStateMachine::onSensorTriggered);
-    connect(this, &TcpServer::sensorReleased, m_stateMachine, &ScanStateMachine::onSensorReleased);
+    connect(this, &TcpServer::laserTriggered, m_laser, &LaserSensor::onLaserTriggered);
+    connect(this, &TcpServer::laserReleased,  m_laser, &LaserSensor::onLaserReleased);
 }
 
 /**
@@ -55,23 +53,26 @@ int TcpServer::AcceptNewConnection()
     return -1;
 }
 
+/**
+ * @brief Accept the data from client
+ * @return Error code. If it's 0, everything's fine
+ */
 int TcpServer::AcceptDataFromClient()
 {
-    unsigned char byte = 0xFF;
+    unsigned char data = 0xFF;
 
     QDataStream stream{m_socket};
 
-    stream >> byte;
+    stream >> data;
 
-    emit sendInfo( QString(static_cast<char>(byte)) );
+    emit sendInfo( QString(static_cast<char>(data)) );
 
-    if (byte == '0') {
-        emit sensorTriggered();
+    if (data == '0') {
+        emit laserTriggered(data);
     }
-    else if (byte == '1') {
-        emit sensorReleased();
+    else if (data == '1') {
+        emit laserReleased(data);
     }
-
 
     return 0;
 }

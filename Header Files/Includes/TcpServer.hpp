@@ -10,7 +10,8 @@
 #include <QTcpSocket>
 
 #include "ITcpServer.hpp"
-#include "ScanStateMachine.hpp"
+#include "LaserSensor.hpp"
+
 
 class TcpServer : public QObject, public ITcpServer
 {
@@ -20,14 +21,15 @@ class TcpServer : public QObject, public ITcpServer
         explicit TcpServer(QObject *parent = nullptr);
 
     private:
-        QTcpServer* m_server = nullptr;
-        QTcpSocket* m_socket = nullptr;
-        ScanStateMachine *m_stateMachine;
+        QTcpServer  *m_server = nullptr;
+        QTcpSocket  *m_socket = nullptr;
+        LaserSensor *m_laser  = nullptr;
+
 
     signals:
         void sendInfo(QString);
-        void sensorTriggered();
-        void sensorReleased();
+        void laserTriggered(unsigned char);
+        void laserReleased(unsigned char);
 
     public slots:
         int AcceptNewConnection()  override;
