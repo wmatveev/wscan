@@ -58,12 +58,12 @@ bool ScannerController::SetupSerialPorts(const QVector<QString>& portNames, int 
 QString ScannerController::ReadFromPort(int index)
 {
     if (index < 0 || index >= m_ports.size()) {
-        return QString();
+        return {};
     }
 
     QSerialPort *port = m_ports.at(index);
     if (!port->isOpen()) {
-        return QString();
+        return {};
     }
 
     QByteArray data = port->readAll();
