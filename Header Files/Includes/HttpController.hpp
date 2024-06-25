@@ -18,15 +18,15 @@ class HttpController : public QObject
     public:
         explicit HttpController(QObject *parent = nullptr);
 
-    static void ActivateScannerRelay(const QString &url);
-    static void DeactivateScannerRelay(const QString &url);
+    void ActivateScannerRelay(const QString &url);
+    void DeactivateScannerRelay(const QString &url);
 
 private slots:
     void onRequestFinished(QNetworkReply *reply);
 
 private:
     QNetworkAccessManager *networkManager;
-    static QNetworkAccessManager* getNetworkManager();
+    QNetworkAccessManager* getNetworkManager();
 
 };
 

@@ -3,10 +3,11 @@
 //
 
 #include "ScannerController.hpp"
-#include "HttpController.hpp"
+
 
 ScannerController::ScannerController(QObject *parent)
-        : QObject(parent)
+        : QObject(parent),
+          m_hcontroller{new HttpController}
 {
     QVector<QString> portNames = {
         "/dev/ttyACM0",
@@ -22,6 +23,8 @@ ScannerController::ScannerController(QObject *parent)
 
 ScannerController::~ScannerController()
 {
+    delete m_hcontroller;
+
     for (QSerialPort* port : m_ports) {
         if (port->isOpen()) {
             port->close();
@@ -89,7 +92,7 @@ QVector<QByteArray> ScannerController::ReadFromAllPorts()
 
 QByteArray ScannerController::GetBarcode()
 {
-    HttpController::ActivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
+    m_hcontroller->ActivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
 
     QVector<QByteArray> dataFromAllPorts;
     dataFromAllPorts = ReadFromAllPorts();
@@ -97,13 +100,13 @@ QByteArray ScannerController::GetBarcode()
     for (const QByteArray &data : dataFromAllPorts)
     {
         if (!data.isEmpty()) {
-            HttpController::DeactivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
+            m_hcontroller->DeactivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
 
             return data;
         }
     }
 
-    HttpController::DeactivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
+    m_hcontroller->DeactivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
 
     return {};
 }

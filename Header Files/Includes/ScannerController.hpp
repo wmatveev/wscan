@@ -10,6 +10,8 @@
 #include <QTextStream>
 #include <QDebug>
 
+#include "HttpController.hpp"
+
 class ScannerController : public QObject
 {
     Q_OBJECT
@@ -27,6 +29,7 @@ class ScannerController : public QObject
 
     private:
         QVector<QSerialPort*> m_ports;
+        HttpController *m_hcontroller = nullptr;
 };
 
 
