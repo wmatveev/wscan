@@ -9,7 +9,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_PREFIX_PATH "/Users/wmatveev/Documents/_dev/QT/6.6.1/macos")
+#set(CMAKE_PREFIX_PATH "/Users/wmatveev/Documents/_dev/QT/6.6.1/macos")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
