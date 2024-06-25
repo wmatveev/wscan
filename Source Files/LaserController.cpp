@@ -5,14 +5,21 @@
 #include "LaserController.hpp"
 #include <QDebug>
 
-LaserController::LaserController(QObject *parent)
+LaserController::LaserController(ScannerController *scanner, QObject *parent)
         : QObject{parent},
-          m_timer{new QTimer(this)}
-
+          m_timer{new QTimer(this)},
+          m_scanner{scanner}
 {
     m_timer->setSingleShot(true);
 
     connect(m_timer, &QTimer::timeout, this, [this]() {
+        QByteArray barcode = m_scanner->GetBarcode();
+        if (!barcode.isEmpty()) {
+            qDebug() << "Barcode data:" << barcode;
+        } else {
+            qDebug() << "No barcode data received";
+        }
+
         qDebug() << "Timer timeout - 3 seconds elapsed";
     });
 }

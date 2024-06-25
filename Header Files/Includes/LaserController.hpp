@@ -7,13 +7,14 @@
 
 #include <QObject>
 #include <QTimer>
+#include "ScannerController.hpp"
 
 class LaserController : public QObject
 {
     Q_OBJECT
 
     public:
-        explicit LaserController(QObject *parent = nullptr);
+        explicit LaserController(ScannerController *scanner, QObject *parent = nullptr);
 
     public slots:
         void onLaserTriggered(unsigned char);
@@ -21,6 +22,7 @@ class LaserController : public QObject
 
     private:
         QTimer *m_timer = nullptr;
+        ScannerController *m_scanner = nullptr;
 };
 
 

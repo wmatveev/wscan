@@ -55,7 +55,7 @@ bool ScannerController::SetupSerialPorts(const QVector<QString>& portNames, int 
     return true;
 }
 
-QString ScannerController::ReadFromPort(int index)
+QByteArray ScannerController::ReadFromPort(int index)
 {
     if (index < 0 || index >= m_ports.size()) {
         return {};
@@ -68,16 +68,31 @@ QString ScannerController::ReadFromPort(int index)
 
     QByteArray data = port->readAll();
 
-    return QString::fromUtf8(data).trimmed();
+    return data;
 }
 
-QVector<QString> ScannerController::ReadFromAllPorts()
+QVector<QByteArray> ScannerController::ReadFromAllPorts()
 {
-    QVector<QString> allData;
+    QVector<QByteArray> allData;
 
     for (int i = 0; i < m_ports.size(); ++i) {
         allData.append(ReadFromPort(i));
     }
 
     return allData;
+}
+
+QByteArray ScannerController::GetBarcode()
+{
+    QVector<QByteArray> dataFromAllPorts;
+    dataFromAllPorts = ReadFromAllPorts();
+
+    for (const QByteArray &data : dataFromAllPorts)
+    {
+        if (!data.isEmpty()) {
+            return data;
+        }
+    }
+
+    return {};
 }

@@ -11,6 +11,7 @@
 
 #include "ITcpServer.hpp"
 #include "LaserController.hpp"
+#include "ScannerController.hpp"
 
 
 class TcpServer : public QObject, public ITcpServer
@@ -18,13 +19,12 @@ class TcpServer : public QObject, public ITcpServer
     Q_OBJECT
 
     public:
-        explicit TcpServer(QObject *parent = nullptr);
+        explicit TcpServer(ScannerController *scanner, QObject *parent = nullptr);
 
     private:
         QTcpServer  *m_server = nullptr;
         QTcpSocket  *m_socket = nullptr;
-        LaserController *m_laser  = nullptr;
-
+        LaserController   *m_laser   = nullptr;
 
     signals:
         void sendInfo(QString);

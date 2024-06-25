@@ -18,12 +18,12 @@ class ScannerController : public QObject
         explicit ScannerController(QObject *parent = nullptr);
         ~ScannerController();
 
-        QString ReadFromPort(int index);
-        QVector<QString> ReadFromAllPorts();
-
+        QByteArray GetBarcode();
 
     private:
         bool SetupSerialPorts(const QVector<QString>& portNames, int baudRate);
+        QByteArray ReadFromPort(int index);
+        QVector<QByteArray> ReadFromAllPorts();
 
     private:
         QVector<QSerialPort*> m_ports;
