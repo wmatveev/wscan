@@ -49,6 +49,8 @@ bool ScannerController::SetupSerialPorts(const QVector<QString>& portNames, int 
             return false;
         }
 
+        qDebug() << "Port was opened: " << portName;
+
         m_ports.append(port);
     }
 
@@ -67,6 +69,8 @@ QByteArray ScannerController::ReadFromPort(int index)
     }
 
     QByteArray data = port->readAll();
+
+    qDebug() << data;
 
     return data;
 }
