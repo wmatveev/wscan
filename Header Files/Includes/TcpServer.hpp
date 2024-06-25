@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QDataStream>
 
 #include "ITcpServer.hpp"
 #include "LaserController.hpp"
