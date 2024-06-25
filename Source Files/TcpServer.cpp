@@ -65,7 +65,7 @@ int TcpServer::AcceptDataFromClient()
 
     stream >> data;
 
-    emit sendInfo( QString(static_cast<char>(data)) );
+    emit sendInfo( QString("Received the signal: %1").arg(static_cast<char>(data)) );
 
     if (data == '0') {
         emit laserTriggered(data);
