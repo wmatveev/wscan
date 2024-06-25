@@ -40,6 +40,8 @@ void LaserController::onLaserReleased(unsigned char data)
         m_timer->stop();
         qDebug() << "Timer stopped";
     }
+
+    m_controller->DeactivateScannerRelay();
 }
 
 void LaserController::onGetBarcode(const QByteArray &data)
