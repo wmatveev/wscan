@@ -74,8 +74,6 @@ QByteArray PortsController::ReadFromPort(int index)
 
     QByteArray data = port->readAll();
 
-    qDebug() << data;
-
     return data;
 }
 

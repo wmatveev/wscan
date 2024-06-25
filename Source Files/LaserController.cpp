@@ -19,6 +19,8 @@ LaserController::LaserController(ScannerController *scanner, QObject *parent)
         qDebug() << "!---> Start reading ports";
         m_portsController->run();
 
+        qDebug() << "!---> 222";
+
         m_controller->ActivateScannerRelay();
     });
 
