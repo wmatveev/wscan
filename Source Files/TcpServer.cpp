@@ -65,7 +65,6 @@ int TcpServer::AcceptDataFromClient()
 
     stream >> data;
 
-    emit sendInfo( QString("\n"));
     emit sendInfo( QString("------------------------------"));
     emit sendInfo( QString("Received the signal: %1").arg(static_cast<char>(data)) );
 
