@@ -21,10 +21,12 @@ add_executable(wscan
         "Source Files/TcpServer.cpp"
         "Source Files/LaserController.cpp"
         "Source Files/ScannerController.cpp"
+        "Source Files/HttpController.cpp"
 
         "Header Files/Includes/TcpServer.hpp"
         "Header Files/Includes/LaserController.hpp"
         "Header Files/Includes/ScannerController.hpp"
+        "Header Files/Includes/HttpController.hpp"
 
         "Header Files/Interfaces/ITcpServer.hpp"
 )
