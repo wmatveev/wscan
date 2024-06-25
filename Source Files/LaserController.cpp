@@ -27,7 +27,7 @@ LaserController::LaserController(ScannerController *scanner, QObject *parent)
 void LaserController::onLaserTriggered(unsigned char data)
 {
     qDebug() << "Laser triggered with data:" << data;
-    m_timer->start(1000);
+    m_timer->start(10);
 }
 
 void LaserController::onLaserReleased(unsigned char data)
