@@ -3,6 +3,7 @@
 //
 
 #include "ScannerController.hpp"
+#include "HttpController.hpp"
 
 ScannerController::ScannerController(QObject *parent)
         : QObject(parent)
@@ -88,15 +89,21 @@ QVector<QByteArray> ScannerController::ReadFromAllPorts()
 
 QByteArray ScannerController::GetBarcode()
 {
+    HttpController::ActivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
+
     QVector<QByteArray> dataFromAllPorts;
     dataFromAllPorts = ReadFromAllPorts();
 
     for (const QByteArray &data : dataFromAllPorts)
     {
         if (!data.isEmpty()) {
+            HttpController::DeactivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
+
             return data;
         }
     }
+
+    HttpController::DeactivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
 
     return {};
 }
