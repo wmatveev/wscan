@@ -17,7 +17,7 @@ LaserController::LaserController(ScannerController *scanner, QObject *parent)
 
     connect(m_timer, &QTimer::timeout, this, [this]() {
         qDebug() << "!---> Start reading ports";
-        m_portsController->run();
+        m_portsController->start();
 
         qDebug() << "!---> 222";
 
