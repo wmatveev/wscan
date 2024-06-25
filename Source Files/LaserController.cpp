@@ -6,12 +6,11 @@
 #include "LaserController.hpp"
 
 
-LaserController::LaserController(ScannerController *scanner, QObject *parent)
+LaserController::LaserController(QObject *parent)
         : QObject{parent},
           m_timer{new QTimer(this)},
-          m_scanner{scanner},
-          m_portsController{new PortsController},
-          m_controller{new HttpController}
+          m_scanner{new ScannerController},
+          m_portsController{new PortsController}
 {
     m_timer->setSingleShot(true);
 
@@ -19,7 +18,7 @@ LaserController::LaserController(ScannerController *scanner, QObject *parent)
         // Reading ports and waiting barcode
         m_portsController->start();
 
-        m_controller->ActivateScannerRelay();
+        m_scanner->ActivateScannerRelay();
     });
 
     connect(m_portsController, &PortsController::dataReadyForRead, this, &LaserController::onGetBarcode);
@@ -37,7 +36,7 @@ void LaserController::onLaserReleased(unsigned char data)
         qDebug() << "Timer stopped";
     }
 
-    m_controller->DeactivateScannerRelay();
+    m_scanner->DeactivateScannerRelay();
 }
 
 void LaserController::onGetBarcode(const QByteArray &data)
@@ -45,6 +44,6 @@ void LaserController::onGetBarcode(const QByteArray &data)
     qDebug() << "Received barcode data:" << data;
     m_portsController->stopReading();
 
-    m_controller->DeactivateScannerRelay();
+    m_scanner->DeactivateScannerRelay();
 }
 

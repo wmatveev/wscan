@@ -20,8 +20,14 @@ class ScannerController : public QObject
         explicit ScannerController(QObject *parent = nullptr);
         ~ScannerController() override;
 
+        void ActivateScannerRelay();
+        void DeactivateScannerRelay();
+
     private:
-        HttpController *m_hcontroller = nullptr;
+        HttpController *m_http = nullptr;
+        QString cmdActivateScanner   = "REL,1,1";
+        QString cmdDeactivateScanner = "REL,1,0";
+        QString url = "http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=";
 };
 
 

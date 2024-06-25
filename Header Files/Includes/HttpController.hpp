@@ -18,6 +18,7 @@ class HttpController : public QObject
     public:
         explicit HttpController(QObject *parent = nullptr);
 
+    void SendSignalToDevice(const QString &url);
     void ActivateScannerRelay();
     void DeactivateScannerRelay();
 

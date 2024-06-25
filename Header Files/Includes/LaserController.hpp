@@ -16,7 +16,7 @@ class LaserController : public QObject
     Q_OBJECT
 
     public:
-        explicit LaserController(ScannerController *scanner, QObject *parent = nullptr);
+        explicit LaserController(QObject *parent = nullptr);
 
     public slots:
         void onLaserTriggered(unsigned char);
@@ -26,8 +26,7 @@ class LaserController : public QObject
     private:
         QTimer *m_timer = nullptr;
         ScannerController *m_scanner = nullptr;
-        PortsController *m_portsController = nullptr;
-        HttpController  *m_controller = nullptr;
+        PortsController   *m_portsController = nullptr;
 };
 
 

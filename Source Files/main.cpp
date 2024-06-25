@@ -7,8 +7,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    ScannerController *scanner = new ScannerController;
-    ITcpServer  *server = new TcpServer(scanner);
+    ITcpServer  *server = new TcpServer();
 
     return a.exec();
 }

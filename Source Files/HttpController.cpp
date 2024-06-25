@@ -21,39 +21,53 @@ QNetworkAccessManager* HttpController::getNetworkManager()
     return &manager;
 }
 
-void HttpController::ActivateScannerRelay()
+void HttpController::SendSignalToDevice(const QString &url)
 {
-    QUrl qurl("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=REL,1,1");
-
-    QNetworkRequest request(qurl);
+    QNetworkRequest request(url);
     QNetworkReply *reply = getNetworkManager()->get(request);
 
     QObject::connect(reply, &QNetworkReply::finished, [reply]() {
         if (reply->error() == QNetworkReply::NoError) {
-            qDebug() << "Relay activated";
         } else {
-            qDebug() << "Failed to activate relay:" << reply->errorString();
+            qDebug() << "Failed to send data:" << reply->errorString();
         }
         reply->deleteLater();
     });
 }
 
-void HttpController::DeactivateScannerRelay()
-{
-    QUrl qurl("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=REL,1,0");
-
-    QNetworkRequest request(qurl);
-    QNetworkReply *reply = getNetworkManager()->get(request);
-
-    QObject::connect(reply, &QNetworkReply::finished, [reply]() {
-        if (reply->error() == QNetworkReply::NoError) {
-            qDebug() << "Relay deactivated";
-        } else {
-            qDebug() << "Failed to deactivate relay:" << reply->errorString();
-        }
-        reply->deleteLater();
-    });
-}
+//void HttpController::ActivateScannerRelay()
+//{
+//    QUrl qurl("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=REL,1,1");
+//
+//    QNetworkRequest request(qurl);
+//    QNetworkReply *reply = getNetworkManager()->get(request);
+//
+//    QObject::connect(reply, &QNetworkReply::finished, [reply]() {
+//        if (reply->error() == QNetworkReply::NoError) {
+//            qDebug() << "Relay activated";
+//        } else {
+//            qDebug() << "Failed to activate relay:" << reply->errorString();
+//        }
+//        reply->deleteLater();
+//    });
+//}
+//
+//void HttpController::DeactivateScannerRelay()
+//{
+//    QUrl qurl("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=REL,1,0");
+//
+//    QNetworkRequest request(qurl);
+//    QNetworkReply *reply = getNetworkManager()->get(request);
+//
+//    QObject::connect(reply, &QNetworkReply::finished, [reply]() {
+//        if (reply->error() == QNetworkReply::NoError) {
+//            qDebug() << "Relay deactivated";
+//        } else {
+//            qDebug() << "Failed to deactivate relay:" << reply->errorString();
+//        }
+//        reply->deleteLater();
+//    });
+//}
 
 void HttpController::onRequestFinished(QNetworkReply *reply)
 {
@@ -64,3 +78,4 @@ void HttpController::onRequestFinished(QNetworkReply *reply)
     }
     reply->deleteLater();
 }
+

@@ -7,36 +7,24 @@
 
 ScannerController::ScannerController(QObject *parent)
         : QObject(parent),
-          m_hcontroller{new HttpController}
+          m_http{new HttpController}
 {
 }
 
 ScannerController::~ScannerController()
 {
-    delete m_hcontroller;
+    delete m_http;
 }
 
+void ScannerController::ActivateScannerRelay()
+{
+    qDebug() << "Relay activated";
+    m_http->SendSignalToDevice(url+cmdActivateScanner);
+}
 
+void ScannerController::DeactivateScannerRelay()
+{
+    qDebug() << "Relay deactivated";
+    m_http->SendSignalToDevice(url+cmdDeactivateScanner);
+}
 
-
-
-//QByteArray ScannerController::GetBarcode()
-//{
-//    m_hcontroller->ActivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
-//
-//    QVector<QByteArray> dataFromAllPorts;
-//    dataFromAllPorts = ReadFromAllPorts();
-//
-//    for (const QByteArray &data : dataFromAllPorts)
-//    {
-//        if (!data.isEmpty()) {
-//            m_hcontroller->DeactivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
-//
-//            return data;
-//        }
-//    }
-//
-//    m_hcontroller->DeactivateScannerRelay(QString("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd="));
-//
-//    return {};
-//}

@@ -9,10 +9,10 @@
  * @brief TcpServer constructor
  * @param Parent
  */
-TcpServer::TcpServer(ScannerController *scanner, QObject *parent)
+TcpServer::TcpServer(QObject *parent)
         : QObject{parent},
           m_server{new QTcpServer(this)},
-          m_laser{new LaserController(scanner, this)}
+          m_laser{new LaserController(this)}
 {
     connect(this, &TcpServer::sendInfo, this, &TcpServer::ShowInfo);
 

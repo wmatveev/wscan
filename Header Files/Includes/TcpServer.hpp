@@ -20,7 +20,7 @@ class TcpServer : public QObject, public ITcpServer
     Q_OBJECT
 
     public:
-        explicit TcpServer(ScannerController *scanner, QObject *parent = nullptr);
+        explicit TcpServer(QObject *parent = nullptr);
 
     private:
         QTcpServer  *m_server = nullptr;
