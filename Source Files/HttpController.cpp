@@ -21,9 +21,9 @@ QNetworkAccessManager* HttpController::getNetworkManager()
     return &manager;
 }
 
-void HttpController::ActivateScannerRelay(const QString &url)
+void HttpController::ActivateScannerRelay()
 {
-    QUrl qurl(url + "REL,1,1");
+    QUrl qurl("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=REL,1,1");
 
     QNetworkRequest request(qurl);
     QNetworkReply *reply = getNetworkManager()->get(request);
@@ -38,9 +38,9 @@ void HttpController::ActivateScannerRelay(const QString &url)
     });
 }
 
-void HttpController::DeactivateScannerRelay(const QString &url)
+void HttpController::DeactivateScannerRelay()
 {
-    QUrl qurl(url + "REL,1,0");
+    QUrl qurl("http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=REL,1,0");
 
     QNetworkRequest request(qurl);
     QNetworkReply *reply = getNetworkManager()->get(request);

@@ -4,32 +4,31 @@
 
 #include <QDebug>
 #include "LaserController.hpp"
-#include "HttpController.hpp"
 
 
 LaserController::LaserController(ScannerController *scanner, QObject *parent)
         : QObject{parent},
           m_timer{new QTimer(this)},
-          m_scanner{scanner}
+          m_scanner{scanner},
+          m_portsController{new PortsController},
+          m_controller{new HttpController}
 {
     m_timer->setSingleShot(true);
 
     connect(m_timer, &QTimer::timeout, this, [this]() {
-        QByteArray barcode = m_scanner->GetBarcode();
-        if (!barcode.isEmpty()) {
-            qDebug() << "Barcode data:" << barcode;
-        } else {
-            qDebug() << "No barcode data received";
-        }
+        qDebug() << "!---> Start reading ports";
+        m_portsController->run();
 
-        qDebug() << "Timer timeout - 3 seconds elapsed";
+        m_controller->ActivateScannerRelay();
     });
+
+    connect(m_portsController, &PortsController::dataReadyForRead, this, &LaserController::onGetBarcode);
 }
 
 void LaserController::onLaserTriggered(unsigned char data)
 {
     qDebug() << "Laser triggered with data:" << data;
-    m_timer->start(10);
+    m_timer->start(3000);
 }
 
 void LaserController::onLaserReleased(unsigned char data)
@@ -39,5 +38,13 @@ void LaserController::onLaserReleased(unsigned char data)
         m_timer->stop();
         qDebug() << "Timer stopped";
     }
+}
+
+void LaserController::onGetBarcode(const QByteArray &data)
+{
+    qDebug() << "Received barcode data:" << data;
+    m_portsController->stopReading();
+
+    m_controller->DeactivateScannerRelay();
 }
 

@@ -8,6 +8,8 @@
 #include <QObject>
 #include <QTimer>
 #include "ScannerController.hpp"
+#include "HttpController.hpp"
+#include "PortsController.hpp"
 
 class LaserController : public QObject
 {
@@ -19,10 +21,13 @@ class LaserController : public QObject
     public slots:
         void onLaserTriggered(unsigned char);
         void onLaserReleased(unsigned char);
+        void onGetBarcode(const QByteArray &data);
 
     private:
         QTimer *m_timer = nullptr;
         ScannerController *m_scanner = nullptr;
+        PortsController *m_portsController = nullptr;
+        HttpController  *m_controller = nullptr;
 };
 
 

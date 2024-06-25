@@ -25,7 +25,7 @@ class TcpServer : public QObject, public ITcpServer
     private:
         QTcpServer  *m_server = nullptr;
         QTcpSocket  *m_socket = nullptr;
-        LaserController   *m_laser   = nullptr;
+        LaserController *m_laser   = nullptr;
 
     signals:
         void sendInfo(QString);

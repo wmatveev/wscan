@@ -18,17 +18,9 @@ class ScannerController : public QObject
 
     public:
         explicit ScannerController(QObject *parent = nullptr);
-        ~ScannerController();
-
-        QByteArray GetBarcode();
+        ~ScannerController() override;
 
     private:
-        bool SetupSerialPorts(const QVector<QString>& portNames, int baudRate);
-        QByteArray ReadFromPort(int index);
-        QVector<QByteArray> ReadFromAllPorts();
-
-    private:
-        QVector<QSerialPort*> m_ports;
         HttpController *m_hcontroller = nullptr;
 };
 
