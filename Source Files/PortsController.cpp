@@ -115,7 +115,6 @@ void PortsController::run()
         {
             emit dataReadyForRead(data);
             running = false;
-            qDebug() << "!---> Stop reading ports";
         }
         QThread::msleep(100);
     }
