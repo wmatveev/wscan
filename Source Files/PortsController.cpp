@@ -93,9 +93,10 @@ QByteArray PortsController::GetBarcode()
     QVector<QByteArray> dataFromAllPorts;
     dataFromAllPorts = ReadFromAllPorts();
 
-    for (const QByteArray &data : dataFromAllPorts)
+    for (QByteArray &data : dataFromAllPorts)
     {
         if (!data.isEmpty()) {
+            data = data.trimmed();
             return data;
         }
     }
