@@ -26,7 +26,7 @@ LaserController::LaserController(QObject *parent)
 
 void LaserController::onLaserTriggered(unsigned char data)
 {
-    m_timer->start(3000);
+    m_timer->start(30);
 }
 
 void LaserController::onLaserReleased(unsigned char data)
