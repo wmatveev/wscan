@@ -30,12 +30,17 @@ void ScaleController::run()
         return;
     }
 
+    QVector<int> weightFromScales;
+
     std::string zoneConfigPath = "/home/matller/detect_libra_digits/cam202.json";
     std::string shapesConfigPath = "/home/matller/detect_libra_digits/shape.json";
     std::string videoPath = "rtsp://admin:Matller_17@192.168.45.202:554/Streaming/Channels/101";
 
-    for (int i = 0; i < numIterations; ++i) {
+    for (int i = 0; i < numIterations; ++i)
+    {
         float weightNumber = detectDigitFromPython(zoneConfigPath, shapesConfigPath, videoPath);
+        weightFromScales.append(weightNumber);
+
         qDebug() << weightNumber;
 
         // Delay before the next iteration
@@ -43,6 +48,8 @@ void ScaleController::run()
             msleep(delayMs);
         }
     }
+
+    emit weightReadyForRead(weightFromScales);
 }
 
 float ScaleController::detectDigitFromPython(const std::string &zoneConfigPath, const std::string &shapesConfigPath, const std::string &videoPath)

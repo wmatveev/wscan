@@ -6,8 +6,6 @@
 #include "LaserController.hpp"
 
 
-
-
 LaserController::LaserController(QObject *parent)
         : QObject{parent},
           m_timer{new QTimer(this)},
@@ -30,6 +28,7 @@ LaserController::LaserController(QObject *parent)
     });
 
     connect(m_portsController, &PortsController::dataReadyForRead, this, &LaserController::onGetBarcode);
+    connect(m_scaleController, &ScaleController::weightReadyForRead, this, &LaserController::onGetWeight);
 }
 
 void LaserController::onLaserTriggered(unsigned char data)
@@ -56,4 +55,9 @@ void LaserController::onGetBarcode(const QByteArray &data)
 
     m_trafficlightController->GreenLight();
     m_scanner->DeactivateScannerRelay();
+}
+
+void LaserController::onGetWeight(const QVector<int> &weight)
+{
+
 }

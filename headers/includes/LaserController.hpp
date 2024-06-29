@@ -24,6 +24,7 @@ class LaserController : public QObject
         void onLaserTriggered(unsigned char);
         void onLaserReleased(unsigned char);
         void onGetBarcode(const QByteArray &data);
+        void onGetWeight(const QVector<int> &weight);
 
     private:
         QTimer *m_timer = nullptr;

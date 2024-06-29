@@ -27,6 +27,8 @@ class ScaleController : public QThread
         explicit ScaleController(QObject *parent = nullptr);
         ~ScaleController();
 
+    signals:
+        void weightReadyForRead(const QVector<int> &weight);
 
     protected:
         void run() override;

@@ -17,6 +17,7 @@ class TrafficLightController : public QObject
         explicit TrafficLightController(QObject *parent = nullptr);
         ~TrafficLightController() override;
 
+
     public:
         void TurnOffAllTheLights();
         void GreenLight();
