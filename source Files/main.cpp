@@ -12,16 +12,20 @@ int main(int argc, char *argv[])
 
     auto *trafficLightController = new TrafficLightController();
 
-    trafficLightController->GreenLight();
+    for(int i=0; i<100 ;i++)
+    {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+        trafficLightController->GreenLight();
 
-    trafficLightController->YellowLight();
+        std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+        trafficLightController->YellowLight();
 
-    trafficLightController->RedLight();
+        std::this_thread::sleep_for(std::chrono::seconds(1));
 
+        trafficLightController->RedLight();
+    }
 
 //    ITcpServer  *server = new TcpServer();
 

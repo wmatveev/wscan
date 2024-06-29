@@ -18,15 +18,24 @@ class TrafficLightController : public QObject
         ~TrafficLightController() override;
 
     public:
+        void TurnOffAllTheLights();
         void GreenLight();
         void YellowLight();
         void RedLight();
+        void BlueLight();
 
     private:
         HttpController *m_http = nullptr;
-        QString cmdToGreenLight  = "WR,1,1";
-        QString cmdToYellowLight = "WR,2,1";
-        QString cmdToRedLight    = "WR,3,1";
+        QString cmdToGreenLight   = "WR,1,1";
+        QString cmdToYellowLight  = "WR,2,1";
+        QString cmdToRedLight     = "WR,3,1";
+        QString cmdToBlueLight    = "WR,4,1";
+
+        QString cmdTurnOffGreenLight   = "WR,1,0";
+        QString cmdTurnOffYellowLight  = "WR,2,0";
+        QString cmdTurnOffRedLight     = "WR,3,0";
+        QString cmdTurnOffBlueLight    = "WR,4,0";
+
         QString url = "http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=";
 };
 
