@@ -1,5 +1,8 @@
 #include <QCoreApplication>
 
+#include <thread>
+#include <chrono>
+
 #include "TcpServer.hpp"
 #include "TrafficLightController.hpp"
 
@@ -11,9 +14,13 @@ int main(int argc, char *argv[])
 
     trafficLightController->GreenLight();
 
-    QTimer::singleShot(1000, trafficLightController, SLOT(YellowLight()));
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    QTimer::singleShot(2000, trafficLightController, SLOT(RedLight()));
+    trafficLightController->YellowLight();
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    trafficLightController->RedLight();
 
 
 //    ITcpServer  *server = new TcpServer();
