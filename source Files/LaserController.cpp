@@ -57,4 +57,3 @@ void LaserController::onGetBarcode(const QByteArray &data)
     m_trafficlightController->GreenLight();
     m_scanner->DeactivateScannerRelay();
 }
-

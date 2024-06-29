@@ -47,5 +47,3 @@ void TrafficLightController::BlueLight()
     TurnOffAllTheLights();
     m_http->SendSignalToDevice(url + cmdToBlueLight);
 }
-
-
