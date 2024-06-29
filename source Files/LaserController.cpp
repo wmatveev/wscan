@@ -20,8 +20,7 @@ LaserController::LaserController(QObject *parent)
     m_timer->setSingleShot(true);
 
     connect(m_timer, &QTimer::timeout, this, [this]() {
-
-        m_trafficlightController->YellowLight();
+        m_trafficlightController->RedLight();
 
         // Reading ports and waiting barcode
         m_portsController->start();
@@ -35,7 +34,8 @@ LaserController::LaserController(QObject *parent)
 
 void LaserController::onLaserTriggered(unsigned char data)
 {
-    m_timer->start(30);
+    m_timer->start(3000);
+    m_trafficlightController->YellowLight();
 }
 
 void LaserController::onLaserReleased(unsigned char data)
@@ -46,7 +46,7 @@ void LaserController::onLaserReleased(unsigned char data)
     }
 
     m_scanner->DeactivateScannerRelay();
-    m_trafficlightController->RedLight();
+    m_trafficlightController->BlueLight();
 }
 
 void LaserController::onGetBarcode(const QByteArray &data)
