@@ -10,6 +10,7 @@
 #include "ScannerController.hpp"
 #include "HttpController.hpp"
 #include "PortsController.hpp"
+#include "ScaleController.hpp"
 
 class LaserController : public QObject
 {
@@ -26,7 +27,8 @@ class LaserController : public QObject
     private:
         QTimer *m_timer = nullptr;
         ScannerController *m_scanner = nullptr;
-        PortsController   *m_portsController = nullptr;
+        PortsController *m_portsController = nullptr;
+        ScaleController *m_scaleController = nullptr;
 };
 
 

@@ -6,17 +6,21 @@
 #include "LaserController.hpp"
 
 
+
+
 LaserController::LaserController(QObject *parent)
         : QObject{parent},
           m_timer{new QTimer(this)},
           m_scanner{new ScannerController},
-          m_portsController{new PortsController}
+          m_portsController{new PortsController},
+          m_scaleController{new ScaleController}
 {
     m_timer->setSingleShot(true);
 
     connect(m_timer, &QTimer::timeout, this, [this]() {
         // Reading ports and waiting barcode
         m_portsController->start();
+        m_scaleController->start();
 
         m_scanner->ActivateScannerRelay();
     });
