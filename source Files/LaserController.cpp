@@ -16,6 +16,7 @@ LaserController::LaserController(QObject *parent)
           m_scaleController{new ScaleController},
           m_trafficlightController{new TrafficLightController}
 {
+    m_trafficlightController->BlueLight();
     m_timer->setSingleShot(true);
 
     connect(m_timer, &QTimer::timeout, this, [this]() {
