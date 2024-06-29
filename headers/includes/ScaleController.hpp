@@ -37,7 +37,7 @@ class ScaleController : public QThread
     private:
         CURL *curlHandle;
         const int numIterations = 15;
-        const int delayMs = 10;
+        const int delayMs = 50;
 };
 
 #endif // WSCAN_SCALECONTROLLER_HPP
