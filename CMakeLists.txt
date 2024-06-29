@@ -32,13 +32,15 @@ add_executable(wscan
         "source Files/HttpController.cpp"
         "source Files/PortsController.cpp"
         "source Files/ScaleController.cpp"
+        "source Files/TrafficLightController.cpp"
 
         "headers/includes/TcpServer.hpp"
         "headers/includes/LaserController.hpp"
         "headers/includes/ScannerController.hpp"
         "headers/includes/HttpController.hpp"
         "headers/includes/PortsController.hpp"
-        headers/includes/ScaleController.hpp
+        "headers/includes/ScaleController.hpp"
+        "headers/includes/TrafficLightController.hpp"
 
         "headers/interfaces/ITcpServer.hpp"
 )
