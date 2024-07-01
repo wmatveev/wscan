@@ -99,7 +99,7 @@ void LaserController::TryInsertDataToDB()
         const char* barcodeCharData = m_barcodeData.data();
 
         QSqlQuery query;
-        query.prepare("INSERT INTO your_table_name (barcode_data, weight_data) VALUES (:barcode_data, :weight_data)");
+        query.prepare("INSERT INTO production_history (barcode_data, weight_data) VALUES (:barcode_data, :weight_data)");
         query.bindValue(":barcode_data", barcodeCharData);
         query.bindValue(":weight_data", m_weightData);
 
