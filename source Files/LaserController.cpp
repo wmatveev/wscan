@@ -79,6 +79,8 @@ void LaserController::test()
     m_weightData  = 31.2f;
 
     m_hasBarcode = m_hasWeight = true;
+
+    TryInsertDataToDB();
 }
 
 void LaserController::TryInsertDataToDB()
