@@ -73,50 +73,32 @@ void LaserController::onGetWeight(const float &weight)
     TryInsertDataToDB();
 }
 
-void LaserController::test()
-{
-    m_barcodeData = QByteArray::number(123456);;
-    m_weightData  = 31.2f;
-
-    m_hasBarcode = m_hasWeight = true;
-
-    TryInsertDataToDB();
-}
-
 void LaserController::TryInsertDataToDB()
 {
-    qDebug() << "---> step1";
     if (m_hasBarcode && m_hasWeight)
     {
-        qDebug() << "---> step2";
         QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
         db.setHostName("192.168.45.197");
         db.setDatabaseName("w_scan");
         db.setUserName("postgres");
         db.setPassword("Matller_17");
 
-        qDebug() << "---> step3";
-
         if (!db.open()) {
             qDebug() << "Failed to connect to database:" << db.lastError().text();
             return;
         }
 
-        qDebug() << "---> step4";
+//        QString barcodeStr = QString::fromUtf8(m_barcodeData);
+        QString barcodeStr = QString("02/%1/03").arg(QString::fromUtf8(m_barcodeData));
 
-        QString barcodeStr = QString::fromUtf8(m_barcodeData);
-
-        // Формируем строку запроса непосредственно для отладки
         QString queryString = QString("INSERT INTO production_history (barcode, weight) VALUES ('%1', %2)")
                 .arg(barcodeStr)
                 .arg(m_weightData);
 
-        qDebug() << "Executing query:" << queryString;  // Отладочный вывод запроса
+        qDebug() << "Executing query:" << queryString;
 
         QSqlQuery query;
         query.prepare(queryString);
-
-        qDebug() << "---> step5";
 
         if (!query.exec()) {
             qDebug() << "Failed to insert data into database:" << query.lastError().text();
@@ -124,11 +106,7 @@ void LaserController::TryInsertDataToDB()
             qDebug() << "Data inserted successfully.";
         }
 
-        qDebug() << "---> step6";
-
         db.close();
-
-        qDebug() << "---> step7";
 
         m_hasBarcode = false;
         m_hasWeight  = false;
