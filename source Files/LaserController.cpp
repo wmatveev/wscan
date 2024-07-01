@@ -73,6 +73,16 @@ void LaserController::onGetWeight(const float &weight)
     TryInsertDataToDB();
 }
 
+void LaserController::test()
+{
+    m_barcodeData = QByteArray::number(123456);;
+    m_weightData  = 31.2f;
+
+    m_hasBarcode = m_hasWeight = true;
+
+    TryInsertDataToDB();
+}
+
 void LaserController::TryInsertDataToDB()
 {
     if (m_hasBarcode && m_hasWeight)
