@@ -22,6 +22,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS SerialPort)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Sql)
 find_package(CURL REQUIRED)
 
 add_executable(wscan
@@ -48,6 +49,7 @@ add_executable(wscan
 target_link_libraries(wscan Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(wscan Qt${QT_VERSION_MAJOR}::Network)
 target_link_libraries(wscan Qt${QT_VERSION_MAJOR}::SerialPort)
+target_link_libraries(wscan Qt${QT_VERSION_MAJOR}::Sql)
 target_link_libraries(wscan ${CURL_LIBRARIES})
 
 # add path to header files

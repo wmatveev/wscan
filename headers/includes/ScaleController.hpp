@@ -28,7 +28,7 @@ class ScaleController : public QThread
         ~ScaleController();
 
     signals:
-        void weightReadyForRead(const QVector<int> &weight);
+        void weightReadyForRead(const float &weight);
 
     protected:
         void run() override;
@@ -38,8 +38,6 @@ class ScaleController : public QThread
 
     private:
         CURL *curlHandle;
-        const int numIterations = 15;
-        const int delayMs = 50;
 };
 
 #endif // WSCAN_SCALECONTROLLER_HPP

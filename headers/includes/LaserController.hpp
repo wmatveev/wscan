@@ -7,6 +7,11 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QDebug>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+
 #include "ScannerController.hpp"
 #include "HttpController.hpp"
 #include "PortsController.hpp"
@@ -24,9 +29,20 @@ class LaserController : public QObject
         void onLaserTriggered(unsigned char);
         void onLaserReleased(unsigned char);
         void onGetBarcode(const QByteArray &data);
-        void onGetWeight(const QVector<int> &weight);
+        void onGetWeight(const float &weight);
+
+    public:
+        void test();
 
     private:
+        void TryInsertDataToDB();
+
+    private:
+        bool m_hasBarcode = false;
+        bool m_hasWeight  = false;
+        QByteArray m_barcodeData;
+        float m_weightData = 0.0f;
+
         QTimer *m_timer = nullptr;
         ScannerController *m_scanner = nullptr;
         PortsController *m_portsController = nullptr;
