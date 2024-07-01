@@ -104,11 +104,11 @@ void LaserController::TryInsertDataToDB()
 
         qDebug() << "---> step4";
 
-        const char* barcodeCharData = m_barcodeData.data();
+        QString barcodeStr = QString::fromUtf8(m_barcodeData);
 
         QSqlQuery query;
         query.prepare("INSERT INTO production_history (barcode_data, weight_data) VALUES (:barcode_data, :weight_data)");
-        query.bindValue(":barcode_data", barcodeCharData);
+        query.bindValue(":barcode_data", barcodeStr);
         query.bindValue(":weight_data", m_weightData);
 
         qDebug() << "---> step5";
