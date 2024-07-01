@@ -106,10 +106,15 @@ void LaserController::TryInsertDataToDB()
 
         QString barcodeStr = QString::fromUtf8(m_barcodeData);
 
+        // Формируем строку запроса непосредственно для отладки
+        QString queryString = QString("INSERT INTO production_history (barcode, weight) VALUES ('%1', %2)")
+                .arg(barcodeStr)
+                .arg(m_weightData);
+
+        qDebug() << "Executing query:" << queryString;  // Отладочный вывод запроса
+
         QSqlQuery query;
-        query.prepare("INSERT INTO production_history (barcode_data, weight_data) VALUES (:barcode_data, :weight_data)");
-        query.bindValue(":barcode_data", barcodeStr);
-        query.bindValue(":weight_data", m_weightData);
+        query.prepare(queryString);
 
         qDebug() << "---> step5";
 
@@ -129,5 +134,4 @@ void LaserController::TryInsertDataToDB()
         m_hasWeight  = false;
     }
 }
-
 
