@@ -83,18 +83,24 @@ void LaserController::test()
 
 void LaserController::TryInsertDataToDB()
 {
+    qDebug() << "---> step1";
     if (m_hasBarcode && m_hasWeight)
     {
+        qDebug() << "---> step2";
         QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
         db.setHostName("192.168.45.197");
         db.setDatabaseName("w_scan");
         db.setUserName("postgres");
         db.setPassword("Matller_17");
 
+        qDebug() << "---> step3";
+
         if (!db.open()) {
             qDebug() << "Failed to connect to database:" << db.lastError().text();
             return;
         }
+
+        qDebug() << "---> step4";
 
         const char* barcodeCharData = m_barcodeData.data();
 
@@ -103,13 +109,19 @@ void LaserController::TryInsertDataToDB()
         query.bindValue(":barcode_data", barcodeCharData);
         query.bindValue(":weight_data", m_weightData);
 
+        qDebug() << "---> step5";
+
         if (!query.exec()) {
             qDebug() << "Failed to insert data into database:" << query.lastError().text();
         } else {
             qDebug() << "Data inserted successfully.";
         }
 
+        qDebug() << "---> step6";
+
         db.close();
+
+        qDebug() << "---> step7";
 
         m_hasBarcode = false;
         m_hasWeight  = false;
