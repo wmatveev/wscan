@@ -31,9 +31,6 @@ class LaserController : public QObject
         void onGetBarcode(const QByteArray &data);
         void onGetWeight(const float &weight);
 
-    public:
-        void test();
-
     private:
         void TryInsertDataToDB();
 

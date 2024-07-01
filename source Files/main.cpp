@@ -7,10 +7,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-//    ITcpServer  *server = new TcpServer();
-
-    LaserController laserController;
-    laserController.test();
+    ITcpServer  *server = new TcpServer();
 
     return a.exec();
 }
