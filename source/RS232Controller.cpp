@@ -13,7 +13,5 @@ RS232Controller::RS232Controller(QObject *parent)
 
 void RS232Controller::SendBarcodeToRS232(const QString& barcode)
 {
-    qDebug() << "sendBarcodeUrl: " << url + cmdSendBarcodeToRS232 + barcode;
-
     m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + barcode);
 }
