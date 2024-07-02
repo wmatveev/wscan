@@ -12,6 +12,7 @@ DataBaseController::DataBaseController(QObject *parent)
 
 DataBaseController::~DataBaseController()
 {
+    qDebug() << "DB: [The database has been closed.]";
     db.close();
 }
 
