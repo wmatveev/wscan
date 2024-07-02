@@ -37,13 +37,13 @@ void ScaleController::run()
     std::string shapesConfigPath = "/home/matller/detect_libra_digits/shape.json";
     std::string videoPath = "rtsp://admin:Matller_17@192.168.45.202:554/Streaming/Channels/101";
 
-    for( int i=0; i<20; i++ )
+    for( int i=0; i<30; i++ )
     {
         weightNumber = detectDigitFromPython(zoneConfigPath, shapesConfigPath, videoPath);
         if( weightNumber > 20.0f ) {
             break;
         }
-        msleep(200);
+        msleep(100);
     }
 
     qDebug() << "Вес полутуши: " << weightNumber;
