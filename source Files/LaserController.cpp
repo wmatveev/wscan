@@ -70,6 +70,8 @@ void LaserController::onGetWeight(const float &weight)
     m_weightData = weight;
     m_hasWeight  = true;
 
+    qDebug() << "---> step1: " << m_weightData;
+
     TryInsertDataToDB();
 }
 
@@ -89,10 +91,11 @@ void LaserController::TryInsertDataToDB()
         }
 
         QString barcodeStr = QString("02/%1/03").arg(QString::fromUtf8(m_barcodeData));
+        QString weightStr = QString::number(m_weightData, 'f', 1);
 
         QString queryString = QString("INSERT INTO production_history (barcode, weight) VALUES ('%1', %2)")
                 .arg(barcodeStr)
-                .arg(m_weightData);
+                .arg(weightStr);
 
         qDebug() << "Executing query:" << queryString;
 

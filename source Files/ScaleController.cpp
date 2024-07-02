@@ -38,7 +38,7 @@ void ScaleController::run()
 
     float weightNumber = detectDigitFromPython(zoneConfigPath, shapesConfigPath, videoPath);
 
-    qDebug() << weightNumber;
+    qDebug() << "Вес полутуши: " << weightNumber;
 
     emit weightReadyForRead(weightFromScales);
 }
