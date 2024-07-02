@@ -77,40 +77,48 @@ void LaserController::onGetWeight(const float &weight)
 
 void LaserController::TryInsertDataToDB()
 {
-    if (m_hasBarcode && m_hasWeight)
+    if (m_hasBarcode && m_hasWeight && m_weightData < 20.0f)
     {
-        QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
-        db.setHostName("192.168.45.197");
-        db.setDatabaseName("w_scan");
-        db.setUserName("postgres");
-        db.setPassword("Matller_17");
-
-        if (!db.open()) {
-            qDebug() << "Failed to connect to database:" << db.lastError().text();
-            return;
-        }
-
-        QString barcodeStr = QString("02/%1/03").arg(QString::fromUtf8(m_barcodeData));
-
-        QString queryString = QString("INSERT INTO production_history (barcode, weight) VALUES ('%1', %2)")
-                .arg(barcodeStr)
-                .arg(m_weightData);
-
-        qDebug() << "Executing query:" << queryString;
-
-        QSqlQuery query;
-        query.prepare(queryString);
-
-        if (!query.exec()) {
-            qDebug() << "Failed to insert data into database:" << query.lastError().text();
-        } else {
-            qDebug() << "Data inserted successfully.";
-        }
-
-        db.close();
-
         m_hasBarcode = false;
         m_hasWeight  = false;
+    }
+    else
+    {
+        if (m_hasBarcode && m_hasWeight)
+        {
+            QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
+            db.setHostName("192.168.45.197");
+            db.setDatabaseName("w_scan");
+            db.setUserName("postgres");
+            db.setPassword("Matller_17");
+
+            if (!db.open()) {
+                qDebug() << "Failed to connect to database:" << db.lastError().text();
+                return;
+            }
+
+            QString barcodeStr = QString("02/%1/03").arg(QString::fromUtf8(m_barcodeData));
+
+            QString queryString = QString("INSERT INTO production_history (barcode, weight) VALUES ('%1', %2)")
+                    .arg(barcodeStr)
+                    .arg(m_weightData);
+
+            qDebug() << "Executing query:" << queryString;
+
+            QSqlQuery query;
+            query.prepare(queryString);
+
+            if (!query.exec()) {
+                qDebug() << "Failed to insert data into database:" << query.lastError().text();
+            } else {
+                qDebug() << "Data inserted successfully.";
+            }
+
+            db.close();
+
+            m_hasBarcode = false;
+            m_hasWeight  = false;
+        }
     }
 }
 
