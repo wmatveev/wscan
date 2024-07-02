@@ -46,7 +46,7 @@ void ScaleController::run()
         msleep(100);
     }
 
-    qDebug() << "Вес полутуши: " << weightNumber;
+    qDebug() << "[Weight]: " << weightNumber;
 
     emit weightReadyForRead(weightNumber);
 }

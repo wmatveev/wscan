@@ -53,7 +53,7 @@ void LaserController::onLaserReleased(unsigned char data)
 
 void LaserController::onGetBarcode(const QByteArray &data)
 {
-    qDebug() << "Received barcode data:" << data;
+    qDebug() << "[Barcode]:" << data;
     m_portsController->stopReading();
 
     m_barcodeData = data;

@@ -45,8 +45,6 @@ int TcpServer::AcceptNewConnection()
         connect(m_socket, &QTcpSocket::readyRead,    this, &TcpServer::AcceptDataFromClient);
         connect(m_socket, &QTcpSocket::disconnected, this, &TcpServer::HandleClientDisconnection);
 
-        emit sendInfo(QString("New connection from %1").arg(m_socket->peerAddress().toString()));
-
         return 0;
     }
 
@@ -65,8 +63,8 @@ int TcpServer::AcceptDataFromClient()
 
     stream >> data;
 
-    emit sendInfo( QString("------------------------------"));
-    emit sendInfo( QString("Received the signal: %1").arg(static_cast<char>(data)) );
+    qDebug() << "------------------------------";
+    qDebug() << "[Signal]: " << static_cast<char>(data);
 
     if (data == '0') {
         emit laserTriggered(data);
