@@ -35,6 +35,7 @@ add_executable(wscan
         "source/ScaleController.cpp"
         "source/TrafficLightController.cpp"
         "source/RS232Controller.cpp"
+        "source/DataBaseController.cpp"
 
         "headers/includes/TcpServer.hpp"
         "headers/includes/LaserController.hpp"
@@ -44,6 +45,7 @@ add_executable(wscan
         "headers/includes/ScaleController.hpp"
         "headers/includes/TrafficLightController.hpp"
         "headers/includes/RS232Controller.hpp"
+        "headers/includes/DataBaseController.hpp"
 
         "headers/interfaces/ITcpServer.hpp"
 )

@@ -13,6 +13,7 @@ LaserController::LaserController(QObject *parent)
           m_scaleController{new ScaleController},
           m_trafficlightController{new TrafficLightController},
           m_rs232Controller{new RS232Controller},
+          m_dataBaseController{new DataBaseController},
           m_hasBarcode{false},
           m_hasWeight{false}
 {
@@ -85,35 +86,14 @@ void LaserController::TryInsertDataToDB()
     {
         if (m_hasBarcode && m_hasWeight)
         {
-            QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
-            db.setHostName("192.168.45.197");
-            db.setDatabaseName("w_scan");
-            db.setUserName("postgres");
-            db.setPassword("Matller_17");
-
-            if (!db.open()) {
-                qDebug() << "Failed to connect to database:" << db.lastError().text();
-                return;
-            }
-
             QString barcodeStr = QString("[STX]%1[ETX]").arg(QString::fromUtf8(m_barcodeData));
 
             QString queryString = QString("INSERT INTO production_history (barcode, weight) VALUES ('%1', %2)")
                     .arg(barcodeStr)
                     .arg(m_weightData);
 
-            qDebug() << "Executing query:" << queryString;
+            m_dataBaseController->ExecuteSQLQuery(queryString);
 
-            QSqlQuery query;
-            query.prepare(queryString);
-
-            if (!query.exec()) {
-                qDebug() << "Failed to insert data into database:" << query.lastError().text();
-            } else {
-                qDebug() << "Data inserted successfully.";
-            }
-
-            db.close();
 
             m_rs232Controller->SendBarcodeToRS232(barcodeStr);
 

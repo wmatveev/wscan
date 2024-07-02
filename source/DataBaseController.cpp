@@ -1,0 +1,50 @@
+//
+// Created by wmatveev on 02.07.2024.
+//
+
+#include "DataBaseController.hpp"
+
+DataBaseController::DataBaseController(QObject *parent)
+        : QObject(parent)
+{
+    OpenDataBase();
+}
+
+DataBaseController::~DataBaseController()
+{
+    db.close();
+}
+
+bool DataBaseController::OpenDataBase()
+{
+    db = QSqlDatabase::addDatabase("QPSQL");
+
+    db.setHostName(hostName);
+    db.setDatabaseName(databaseName);
+    db.setUserName(userName);
+    db.setPassword(password);
+
+    if (!db.open()) {
+        qDebug() << "DB: [Failed to connect to database:" << db.lastError().text() << "]";
+        return false;
+    }
+
+    qDebug() << "DB: [Connection to database successful]";
+    return true;
+}
+
+bool DataBaseController::ExecuteSQLQuery(const QString &query)
+{
+    QSqlQuery sqlQuery;
+
+    sqlQuery.prepare(query);
+
+    if (!sqlQuery.exec()) {
+        qDebug() << "Failed to insert data into database:" << sqlQuery.lastError().text();
+        return false;
+    }
+
+    qDebug() << "Data inserted successfully.";
+    return true;
+}
+
