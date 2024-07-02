@@ -43,7 +43,7 @@ void ScaleController::run()
         if( weightNumber > 20.0f ) {
             break;
         }
-        msleep(100);
+        msleep(200);
     }
 
     qDebug() << "Вес полутуши: " << weightNumber;
