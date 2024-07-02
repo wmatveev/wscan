@@ -30,7 +30,7 @@ void ScaleController::run()
         return;
     }
 
-    float weightFromScales;
+//    float weightFromScales;
 
     std::string zoneConfigPath = "/home/matller/detect_libra_digits/cam202.json";
     std::string shapesConfigPath = "/home/matller/detect_libra_digits/shape.json";
@@ -40,7 +40,7 @@ void ScaleController::run()
 
     qDebug() << "Вес полутуши: " << weightNumber;
 
-    emit weightReadyForRead(weightFromScales);
+    emit weightReadyForRead(weightNumber);
 }
 
 float ScaleController::detectDigitFromPython(const std::string &zoneConfigPath, const std::string &shapesConfigPath, const std::string &videoPath)
