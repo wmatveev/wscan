@@ -30,13 +30,21 @@ void ScaleController::run()
         return;
     }
 
+    float weightNumber = 0.0f;
 //    float weightFromScales;
 
     std::string zoneConfigPath = "/home/matller/detect_libra_digits/cam202.json";
     std::string shapesConfigPath = "/home/matller/detect_libra_digits/shape.json";
     std::string videoPath = "rtsp://admin:Matller_17@192.168.45.202:554/Streaming/Channels/101";
 
-    float weightNumber = detectDigitFromPython(zoneConfigPath, shapesConfigPath, videoPath);
+    for( int i=0; i<20; i++ )
+    {
+        weightNumber = detectDigitFromPython(zoneConfigPath, shapesConfigPath, videoPath);
+        if( weightNumber > 20.0f ) {
+            break;
+        }
+        msleep(100);
+    }
 
     qDebug() << "Вес полутуши: " << weightNumber;
 
