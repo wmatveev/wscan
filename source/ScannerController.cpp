@@ -18,13 +18,13 @@ ScannerController::~ScannerController()
 
 void ScannerController::ActivateScannerRelay()
 {
-    qDebug() << "[Relay]:\tActivated";
+    qDebug() << "[Relay]: Activated";
     m_http->SendSignalToDevice(url + cmdActivateScanner);
 }
 
 void ScannerController::DeactivateScannerRelay()
 {
-    qDebug() << "[Relay]:\tDeactivated";
+    qDebug() << "[Relay]: Deactivated";
     m_http->SendSignalToDevice(url + cmdDeactivateScanner);
 }
 

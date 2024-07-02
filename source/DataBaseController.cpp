@@ -12,7 +12,7 @@ DataBaseController::DataBaseController(QObject *parent)
 
 DataBaseController::~DataBaseController()
 {
-    qDebug() << "[DB]:\tThe database has been closed.";
+    qDebug() << "[DB]: The database has been closed.";
     db.close();
 }
 
@@ -26,11 +26,11 @@ bool DataBaseController::OpenDataBase()
     db.setPassword(password);
 
     if (!db.open()) {
-        qDebug() << "[DB]:\tFailed to connect to database:" << db.lastError().text();
+        qDebug() << "[DB]: Failed to connect to database:" << db.lastError().text();
         return false;
     }
 
-    qDebug() << "DB:\t[Connection to database successful]";
+    qDebug() << "DB: [Connection to database successful]";
     return true;
 }
 
@@ -41,7 +41,7 @@ bool DataBaseController::ExecuteSQLQuery(const QString &query)
     sqlQuery.prepare(query);
 
     if (!sqlQuery.exec()) {
-        qDebug() << "[DB]:\tFailed to insert data into database:" << sqlQuery.lastError().text();
+        qDebug() << "[DB]: Failed to insert data into database:" << sqlQuery.lastError().text();
         return false;
     }
 

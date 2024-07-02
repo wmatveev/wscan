@@ -64,7 +64,7 @@ int TcpServer::AcceptDataFromClient()
     stream >> data;
 
     qDebug() << "------------------------------";
-    qDebug() << "[Signal]:\t" << static_cast<char>(data);
+    qDebug() << "[Signal]: " << static_cast<char>(data);
 
     if (data == '0') {
         emit laserTriggered(data);
