@@ -12,6 +12,7 @@ LaserController::LaserController(QObject *parent)
           m_portsController{new PortsController},
           m_scaleController{new ScaleController},
           m_trafficlightController{new TrafficLightController},
+          m_rs232Controller{new RS232Controller},
           m_hasBarcode{false},
           m_hasWeight{false}
 {
@@ -70,8 +71,6 @@ void LaserController::onGetWeight(const float &weight)
     m_weightData = weight;
     m_hasWeight  = true;
 
-    qDebug() << "---> step1: " << m_weightData;
-
     TryInsertDataToDB();
 }
 
@@ -97,7 +96,7 @@ void LaserController::TryInsertDataToDB()
                 return;
             }
 
-            QString barcodeStr = QString("02/%1/03").arg(QString::fromUtf8(m_barcodeData));
+            QString barcodeStr = QString("[STX]%1[ETX]").arg(QString::fromUtf8(m_barcodeData));
 
             QString queryString = QString("INSERT INTO production_history (barcode, weight) VALUES ('%1', %2)")
                     .arg(barcodeStr)
@@ -115,6 +114,8 @@ void LaserController::TryInsertDataToDB()
             }
 
             db.close();
+
+            m_rs232Controller->SendBarcodeToRS232(barcodeStr);
 
             m_hasBarcode = false;
             m_hasWeight  = false;

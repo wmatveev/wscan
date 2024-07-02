@@ -17,6 +17,8 @@
 #include "PortsController.hpp"
 #include "ScaleController.hpp"
 #include "TrafficLightController.hpp"
+#include "RS232Controller.hpp"
+
 
 class LaserController : public QObject
 {
@@ -44,6 +46,7 @@ class LaserController : public QObject
         ScannerController *m_scanner = nullptr;
         PortsController *m_portsController = nullptr;
         ScaleController *m_scaleController = nullptr;
+        RS232Controller *m_rs232Controller = nullptr;
         TrafficLightController *m_trafficlightController = nullptr;
 };
 

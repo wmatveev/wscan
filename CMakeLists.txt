@@ -26,14 +26,15 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Sql)
 find_package(CURL REQUIRED)
 
 add_executable(wscan
-        "source Files/main.cpp"
-        "source Files/TcpServer.cpp"
-        "source Files/LaserController.cpp"
-        "source Files/ScannerController.cpp"
-        "source Files/HttpController.cpp"
-        "source Files/PortsController.cpp"
-        "source Files/ScaleController.cpp"
-        "source Files/TrafficLightController.cpp"
+        "source/main.cpp"
+        "source/TcpServer.cpp"
+        "source/LaserController.cpp"
+        "source/ScannerController.cpp"
+        "source/HttpController.cpp"
+        "source/PortsController.cpp"
+        "source/ScaleController.cpp"
+        "source/TrafficLightController.cpp"
+        "source/RS232Controller.cpp"
 
         "headers/includes/TcpServer.hpp"
         "headers/includes/LaserController.hpp"
@@ -42,6 +43,7 @@ add_executable(wscan
         "headers/includes/PortsController.hpp"
         "headers/includes/ScaleController.hpp"
         "headers/includes/TrafficLightController.hpp"
+        "headers/includes/RS232Controller.hpp"
 
         "headers/interfaces/ITcpServer.hpp"
 )
