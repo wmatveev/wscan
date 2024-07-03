@@ -73,11 +73,21 @@ float ScaleController::detectDigitFromPython(const std::string &zoneConfigPath, 
         if (res != CURLE_OK) {
             std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
         } else {
-            // Parse JSON response
-            size_t start = readBuffer.find(":") + 1;
-            size_t end = readBuffer.find("}");
-            std::string resultStr = readBuffer.substr(start, end - start);
-            result = std::stof(resultStr);
+            // Парсинг JSON ответа
+            try {
+                size_t start = readBuffer.find(":") + 1;
+                size_t end = readBuffer.find("}");
+                if (start != std::string::npos && end != std::string::npos && start < end) {
+                    std::string resultStr = readBuffer.substr(start, end - start);
+                    result = std::stof(resultStr);
+                } else {
+                    std::cerr << "Error parsing JSON response: " << readBuffer << std::endl;
+                }
+            } catch (const std::invalid_argument &e) {
+                std::cerr << "std::invalid_argument caught: " << e.what() << " while parsing: " << readBuffer << std::endl;
+            } catch (const std::out_of_range &e) {
+                std::cerr << "std::out_of_range caught: " << e.what() << " while parsing: " << readBuffer << std::endl;
+            }
         }
 
         curl_slist_free_all(headers);
