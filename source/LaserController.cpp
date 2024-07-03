@@ -36,7 +36,7 @@ LaserController::LaserController(QObject *parent)
 
 void LaserController::onLaserTriggered(unsigned char data)
 {
-    m_timer->start(1000);
+    m_timer->start(500);
     m_trafficlightController->YellowLight();
 }
 
