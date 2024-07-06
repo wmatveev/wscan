@@ -33,7 +33,14 @@ void RS232Controller::SendBarcodeToRS232(const QString& barcode)
     qDebug() << "[Barcode}: " << barcode;
     qDebug() << "[Binary barcode}:";
 
+//    QStringList binaryLines = binaryBarcode.split("\n", QString::SkipEmptyParts);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     QStringList binaryLines = binaryBarcode.split("\n", QString::SkipEmptyParts);
+#else
+    QStringList binaryLines = binaryBarcode.split("\n", Qt::SkipEmptyParts);
+#endif
+
     for (const QString &line : binaryLines) {
         qDebug() << line;
     }

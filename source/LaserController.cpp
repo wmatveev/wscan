@@ -86,7 +86,7 @@ void LaserController::TryInsertDataToDB()
     {
         if (m_hasBarcode && m_hasWeight)
         {
-            QString barcodeStr = QString("[STX]%1[ETX]").arg(QString::fromUtf8(m_barcodeData));
+            QString barcodeStr = QString("%1").arg(QString::fromUtf8(m_barcodeData));
 
             QString queryString = QString("INSERT INTO production_history (barcode, weight) VALUES ('%1', %2)")
                     .arg(barcodeStr)
