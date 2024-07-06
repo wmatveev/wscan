@@ -24,6 +24,9 @@ class RS232Controller  : public QObject
         HttpController *m_http = nullptr;
         QString cmdSendBarcodeToRS232 = "PUT,U,C,";
         QString url = "http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=";
+
+    private:
+        QString ConvertToBinary(const QString& input);
 };
 
 
