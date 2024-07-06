@@ -31,7 +31,12 @@ void RS232Controller::SendBarcodeToRS232(const QString& barcode)
     QString binaryBarcode = ConvertToBinary(fullBarcode);
 
     qDebug() << "[Barcode}: " << barcode;
-    qDebug() << "[Binary barcode}: " << binaryBarcode;
+    qDebug() << "[Binary barcode}:";
+
+    QStringList binaryLines = binaryBarcode.split("\n", Qt::SkipEmptyParts);
+    for (const QString &line : binaryLines) {
+        qDebug() << line;
+    }
 
     m_http->SendBinaryDataToDevice(url, cmdSendBarcodeToRS232 + binaryBarcode);
 }
