@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QNetworkRequest>
 #include <QUrl>
+#include <QByteArray>
 
 
 HttpController::HttpController(QObject *parent)
@@ -35,6 +36,24 @@ void HttpController::SendSignalToDevice(const QString &url)
     });
 }
 
+void HttpController::SendBinaryDataToDevice(const QString &url, const QString &data)
+{
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QByteArray postData = data.toUtf8();
+
+    QNetworkReply *reply = getNetworkManager()->post(request, postData);
+    QObject::connect(reply, &QNetworkReply::finished, [reply]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            qDebug() << "Data sent successfully";
+        } else {
+            qDebug() << "Failed to send data:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+}
+
 void HttpController::onRequestFinished(QNetworkReply *reply)
 {
     if (reply->error() == QNetworkReply::NoError) {
@@ -44,4 +63,3 @@ void HttpController::onRequestFinished(QNetworkReply *reply)
     }
     reply->deleteLater();
 }
-
