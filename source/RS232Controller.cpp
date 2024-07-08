@@ -35,11 +35,12 @@ void RS232Controller::SendBarcodeToRS232(const QString& barcode)
 
 //    QStringList binaryLines = binaryBarcode.split("\n", QString::SkipEmptyParts);
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
-    QStringList binaryLines = binaryBarcode.split("\n", QString::SkipEmptyParts);
-#else
-    QStringList binaryLines = binaryBarcode.split("\n", Qt::SkipEmptyParts);
-#endif
+//#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+//    QStringList binaryLines = binaryBarcode.split("\n", QString::SkipEmptyParts);
+//#else
+//    QStringList binaryLines = binaryBarcode.split("\n", Qt::SkipEmptyParts);
+//#endif
 
-    m_http->SendBinaryDataToDevice(url, cmdSendBarcodeToRS232 + binaryBarcode);
+    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + binaryBarcode);
+//    m_http->SendBinaryDataToDevice(url, cmdSendBarcodeToRS232 + binaryBarcode);
 }
