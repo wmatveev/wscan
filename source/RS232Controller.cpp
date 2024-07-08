@@ -17,7 +17,7 @@ QString RS232Controller::ConvertToBinary(const QString& input)
     for (const QChar& c : input) {
         QString binaryChar = QString("%1").arg(c.unicode(), 8, 2, QLatin1Char('0'));
         binaryString.append(binaryChar);
-        binaryString.append("\n");
+//        binaryString.append("\n");
     }
     return binaryString;
 }
