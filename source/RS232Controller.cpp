@@ -34,15 +34,5 @@ void RS232Controller::SendBarcodeToRS232(const QString& barcode)
 
     QByteArray binaryBarcode = ConvertToBinary(fullBarcode);
 
-//    qDebug() << "[Barcode}: " << barcode;
-//    qDebug() << "[Binary barcode}:" << binaryBarcode;
-
-//    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + binaryBarcode);
-
-    QString qqq = "http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=PUT,U,C,Hello!";
-
-//    m_http->SendBinaryDataToDevice(qqq);
-    m_http->SendSignalToDevice(qqq);
-
-//    m_http->SendBinaryDataToDevice(url + cmdSendBarcodeToRS232, );
+    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + binaryBarcode);
 }
