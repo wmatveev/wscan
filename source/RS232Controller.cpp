@@ -11,15 +11,19 @@ RS232Controller::RS232Controller(QObject *parent)
 
 }
 
-QString RS232Controller::ConvertToBinary(const QString& input)
+QByteArray RS232Controller::ConvertToBinary(const QString& input)
 {
-    QString binaryString;
+    QByteArray binaryData;
+
     for (const QChar& c : input) {
+        // Преобразуем каждый символ в его бинарное представление
         QString binaryChar = QString("%1").arg(c.unicode(), 8, 2, QLatin1Char('0'));
-        binaryString.append(binaryChar);
-//        binaryString.append("\n");
+        // Преобразуем каждый бит в байт и добавляем в массив байтов
+        for (int i = 0; i < binaryChar.size(); ++i) {
+            binaryData.append(static_cast<char>(binaryChar.at(i).unicode()));
+        }
     }
-    return binaryString;
+    return binaryData;
 }
 
 void RS232Controller::SendBarcodeToRS232(const QString& barcode)
@@ -28,19 +32,11 @@ void RS232Controller::SendBarcodeToRS232(const QString& barcode)
     QString suffix = QString(QChar(0x03));  // Суффикс (ASCII 0x03)
     QString fullBarcode = prefix + barcode + suffix;
 
-    QString binaryBarcode = ConvertToBinary(fullBarcode);
+    QByteArray binaryBarcode = ConvertToBinary(fullBarcode);
 
-    qDebug() << "[Barcode}: " << barcode;
-    qDebug() << "[Binary barcode}:" << binaryBarcode;
+//    qDebug() << "[Barcode}: " << barcode;
+//    qDebug() << "[Binary barcode}:" << binaryBarcode;
 
-//    QStringList binaryLines = binaryBarcode.split("\n", QString::SkipEmptyParts);
-
-//#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
-//    QStringList binaryLines = binaryBarcode.split("\n", QString::SkipEmptyParts);
-//#else
-//    QStringList binaryLines = binaryBarcode.split("\n", Qt::SkipEmptyParts);
-//#endif
-
-    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + binaryBarcode);
-//    m_http->SendBinaryDataToDevice(url, cmdSendBarcodeToRS232 + binaryBarcode);
+//    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + binaryBarcode);
+    m_http->SendBinaryDataToDevice(url + cmdSendBarcodeToRS232, binaryBarcode);
 }

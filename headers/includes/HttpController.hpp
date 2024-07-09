@@ -19,7 +19,7 @@ class HttpController : public QObject
         explicit HttpController(QObject *parent = nullptr);
 
     void SendSignalToDevice(const QString &url);
-    void SendBinaryDataToDevice(const QString &url, const QString &data);
+    void SendBinaryDataToDevice(const QString &url, const QByteArray &data);
 
 private slots:
     void onRequestFinished(QNetworkReply *reply);

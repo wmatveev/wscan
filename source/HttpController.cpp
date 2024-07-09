@@ -36,14 +36,16 @@ void HttpController::SendSignalToDevice(const QString &url)
     });
 }
 
-void HttpController::SendBinaryDataToDevice(const QString &url, const QString &data)
+void HttpController::SendBinaryDataToDevice(const QString &url, const QByteArray &data)
 {
     QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/octet-stream");
 
-    QByteArray postData = data.toUtf8();
+    qDebug() << "[url}: "  << url;
+    qDebug() << "[data}: " << data;
 
-    QNetworkReply *reply = getNetworkManager()->post(request, postData);
+    QNetworkReply *reply = getNetworkManager()->post(request, data);
+
     QObject::connect(reply, &QNetworkReply::finished, [reply]() {
         if (reply->error() == QNetworkReply::NoError) {
             qDebug() << "Data sent successfully";

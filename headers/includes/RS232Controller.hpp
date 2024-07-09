@@ -26,7 +26,7 @@ class RS232Controller  : public QObject
         QString url = "http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=";
 
     private:
-        QString ConvertToBinary(const QString& input);
+        QByteArray ConvertToBinary(const QString& input);
 };
 
 
