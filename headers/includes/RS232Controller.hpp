@@ -22,7 +22,7 @@ class RS232Controller  : public QObject
 
     private:
         HttpController *m_http = nullptr;
-        QString cmdSendBarcodeToRS232 = "$KE,PUT,U,C,";
+        QString cmdSendBarcodeToRS232 = "PUT,U,C,";
         QString url = "http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=";
 
     private:
