@@ -44,7 +44,7 @@ void HttpController::SendBinaryDataToDevice(const QString &url)
     qDebug() << "[url]: " << url;
 //    qDebug() << "[data]: " << data;
 
-    QNetworkReply *reply = getNetworkManager()->post(request, "");
+    QNetworkReply *reply = getNetworkManager()->post(request, QByteArray());
 
     QObject::connect(reply, &QNetworkReply::finished, [reply]() {
         if (reply->error() == QNetworkReply::NoError) {
