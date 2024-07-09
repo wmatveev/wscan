@@ -28,12 +28,16 @@ QByteArray RS232Controller::ConvertToBinary(const QString& input)
 
 void RS232Controller::SendBarcodeToRS232(const QString& barcode)
 {
-    QString prefix = QString(QChar(0x02));  // Префикс (ASCII 0x02)
-    QString suffix = QString(QChar(0x03));  // Суффикс (ASCII 0x03)
-    QString fullBarcode = prefix + barcode + suffix;
+//    QString prefix = QString(QChar(0x02));  // Префикс (ASCII 0x02)
+//    QString suffix = QString(QChar(0x03));  // Суффикс (ASCII 0x03)
+//    QString fullBarcode = prefix + barcode + suffix;
+//
+//    QByteArray binaryBarcode = ConvertToBinary(fullBarcode);
 
-    QByteArray binaryBarcode = ConvertToBinary(fullBarcode);
+    QString testBinaryData = "0000001000110100001110010011100000110100001100000011001000000011"; // Пример корректных данных
+    QByteArray binaryData = QByteArray::fromHex(testBinaryData.toLatin1());
 
-//    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + binaryBarcode);
-    m_http->SendBinaryDataToDevice(url + cmdSendBarcodeToRS232, binaryBarcode);
+    qDebug() << "Test Binary Data:" << binaryData;
+
+    m_http->SendBinaryDataToDevice(url + cmdSendBarcodeToRS232, binaryData);
 }
