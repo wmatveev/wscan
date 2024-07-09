@@ -38,15 +38,12 @@ void HttpController::SendSignalToDevice(const QString &url)
     });
 }
 
-void HttpController::SendBinaryDataToDevice(const QString &url)
+void HttpController::SendBinaryDataToDevice(const QString &url, const QByteArray &data)
 {
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/octet-stream");
 
-    qDebug() << "[url]: " << url;
-//    qDebug() << "[data]: " << data;
-
-    QNetworkReply *reply = getNetworkManager()->post(request, QByteArray());
+    QNetworkReply *reply = getNetworkManager()->post(request, data);
 
     QObject::connect(reply, &QNetworkReply::finished, [reply]() {
         if (reply->error() == QNetworkReply::NoError) {

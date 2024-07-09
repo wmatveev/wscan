@@ -15,10 +15,10 @@ QByteArray RS232Controller::ConvertToBinary(const QString& input)
 {
     QByteArray binaryData;
 
-    for (const QChar& c : input) {
-        // Преобразуем каждый символ в его бинарное представление
+    for (const QChar& c : input)
+    {
         QString binaryChar = QString("%1").arg(c.unicode(), 8, 2, QLatin1Char('0'));
-        // Преобразуем каждый бит в байт и добавляем в массив байтов
+
         for (int i = 0; i < binaryChar.size(); ++i) {
             binaryData.append(static_cast<char>(binaryChar.at(i).unicode()));
         }
@@ -34,5 +34,6 @@ void RS232Controller::SendBarcodeToRS232(const QString& barcode)
 
     QByteArray binaryBarcode = ConvertToBinary(fullBarcode);
 
-    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + binaryBarcode);
+//    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + binaryBarcode);
+    m_http->SendBinaryDataToDevice(url + cmdSendBarcodeToRS232, binaryBarcode);
 }
