@@ -29,8 +29,6 @@ void HttpController::SendSignalToDevice(const QString &url)
 
     QObject::connect(reply, &QNetworkReply::finished, [reply]() {
         if (reply->error() == QNetworkReply::NoError) {
-            QByteArray responseData = reply->readAll();
-            qDebug() << "Data response: " << responseData;
         } else {
             qDebug() << "Failed to send data:" << reply->errorString();
         }
@@ -42,6 +40,9 @@ void HttpController::SendBinaryDataToDevice(const QString &url, const QByteArray
 {
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/octet-stream");
+
+    qDebug() << "[url]: "  << url;
+    qDebug() << "[data]: " << data;
 
     QNetworkReply *reply = getNetworkManager()->post(request, data);
 
