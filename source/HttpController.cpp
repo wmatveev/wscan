@@ -29,6 +29,8 @@ void HttpController::SendSignalToDevice(const QString &url)
 
     QObject::connect(reply, &QNetworkReply::finished, [reply]() {
         if (reply->error() == QNetworkReply::NoError) {
+            QByteArray responseData = reply->readAll();
+            qDebug() << "Data response: " << responseData;
         } else {
             qDebug() << "Failed to send data:" << reply->errorString();
         }
