@@ -24,13 +24,17 @@ QNetworkAccessManager* HttpController::getNetworkManager()
 
 void HttpController::SendSignalToDevice(const QString &url)
 {
+    qDebug() << "{url}: " << url;
+
     QNetworkRequest request(url);
     QNetworkReply *reply = getNetworkManager()->get(request);
 
+//    qDebug() << "{request}: " << request;
+
     QObject::connect(reply, &QNetworkReply::finished, [reply]() {
         if (reply->error() == QNetworkReply::NoError) {
-            QByteArray responseData = reply->readAll();
-            qDebug() << "Data response: " << responseData;
+//            QByteArray responseData = reply->readAll();
+//            qDebug() << "Data response: " << responseData;
         } else {
             qDebug() << "Failed to send data:" << reply->errorString();
         }
