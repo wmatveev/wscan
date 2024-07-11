@@ -27,7 +27,12 @@ LaserController::LaserController(QObject *parent)
         m_portsController->start();
         m_scaleController->start();
 
+        qDebug() << "---> Step 1";
+
         m_scanner->ActivateScannerRelay();
+
+        qDebug() << "---> Step 2";
+
     });
 
     connect(m_portsController, &PortsController::dataReadyForRead, this, &LaserController::onGetBarcode);
