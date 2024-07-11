@@ -28,12 +28,12 @@ QByteArray RS232Controller::ConvertToBinary(const QString& input)
 
 void RS232Controller::SendBarcodeToRS232(const QString& barcode)
 {
-    QString prefix = QString(QChar(0x02));  // Префикс (ASCII 0x02)
-    QString suffix = QString(QChar(0x03));  // Суффикс (ASCII 0x03)
+    QString prefix = QString(QChar(0x1D));
+    QString suffix = QString(QChar(0x1E));
     QString fullBarcode = prefix + barcode + suffix;
 
     QByteArray binaryBarcode = ConvertToBinary(fullBarcode);
 
-    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + binaryBarcode);
+    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + fullBarcode);
 //    m_http->SendBinaryDataToDevice(url + cmdSendBarcodeToRS232, binaryBarcode);
 }
