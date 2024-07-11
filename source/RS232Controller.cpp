@@ -13,8 +13,8 @@ RS232Controller::RS232Controller(QObject *parent)
 
 QByteArray RS232Controller::ConvertToBinary(const QString& input)
 {
-    QString prefix = QString(QChar(0x237A)); // Unicode for ˺
-    QString suffix = QString(QChar(0x237A)); // Unicode for ˪
+    QString prefix = QString(QChar(0x02)); // Unicode for ˺
+    QString suffix = QString(QChar(0x03)); // Unicode for ˪
     QString fullBarcode = prefix + input + suffix;
 
     QByteArray binaryData = fullBarcode.toUtf8();
