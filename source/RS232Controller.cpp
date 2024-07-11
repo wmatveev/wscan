@@ -13,27 +13,18 @@ RS232Controller::RS232Controller(QObject *parent)
 
 QByteArray RS232Controller::ConvertToBinary(const QString& input)
 {
-    QByteArray binaryData;
+    QString prefix = QString(QChar(0x237A)); // Unicode for ˺
+    QString suffix = QString(QChar(0x237A)); // Unicode for ˪
+    QString fullBarcode = prefix + input + suffix;
 
-    for (const QChar& c : input)
-    {
-        QString binaryChar = QString("%1").arg(c.unicode(), 8, 2, QLatin1Char('0'));
-
-        for (int i = 0; i < binaryChar.size(); ++i) {
-            binaryData.append(static_cast<char>(binaryChar.at(i).unicode()));
-        }
-    }
+    QByteArray binaryData = fullBarcode.toUtf8();
     return binaryData;
 }
 
 void RS232Controller::SendBarcodeToRS232(const QString& barcode)
 {
-    QString prefix = QString(QChar(0x1D));
-    QString suffix = QString(QChar(0x1E));
-    QString fullBarcode = prefix + barcode + suffix;
+    QByteArray binaryBarcode = ConvertToBinary(barcode);
 
-    QByteArray binaryBarcode = ConvertToBinary(fullBarcode);
-
-    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + fullBarcode);
+    m_http->SendSignalToDevice(url + cmdSendBarcodeToRS232 + binaryBarcode);
 //    m_http->SendBinaryDataToDevice(url + cmdSendBarcodeToRS232, binaryBarcode);
 }
