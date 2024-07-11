@@ -41,6 +41,7 @@ class LaserController : public QObject
         bool m_hasBarcode = false;
         bool m_hasWeight  = false;
         QByteArray m_barcodeData;
+        QByteArray m_previousBarcodeData;
         float m_weightData = 0.0f;
 
         QTimer *m_timer = nullptr;
