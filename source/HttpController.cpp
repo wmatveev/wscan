@@ -24,38 +24,11 @@ QNetworkAccessManager* HttpController::getNetworkManager()
 
 void HttpController::SendSignalToDevice(const QString &url)
 {
-    qDebug() << "{url}: " << url;
-
     QNetworkRequest request(url);
     QNetworkReply *reply = getNetworkManager()->get(request);
 
-//    qDebug() << "{request}: " << request;
-
     QObject::connect(reply, &QNetworkReply::finished, [reply]() {
         if (reply->error() == QNetworkReply::NoError) {
-//            QByteArray responseData = reply->readAll();
-//            qDebug() << "Data response: " << responseData;
-        } else {
-            qDebug() << "Failed to send data:" << reply->errorString();
-        }
-        reply->deleteLater();
-    });
-}
-
-void HttpController::SendBinaryDataToDevice(const QString &url, const QByteArray &data)
-{
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/octet-stream");
-
-    qDebug() << "[url]: "  << url;
-    qDebug() << "[data]: " << data;
-
-    QNetworkReply *reply = getNetworkManager()->post(request, data);
-
-    QObject::connect(reply, &QNetworkReply::finished, [reply]() {
-        if (reply->error() == QNetworkReply::NoError) {
-            QByteArray responseData = reply->readAll();
-            qDebug() << "Data response: " << responseData;
         } else {
             qDebug() << "Failed to send data:" << reply->errorString();
         }
