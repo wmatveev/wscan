@@ -27,12 +27,7 @@ LaserController::LaserController(QObject *parent)
         m_portsController->start();
         m_scaleController->start();
 
-        qDebug() << "---> Step 1";
-
         m_scanner->ActivateScannerRelay();
-
-        qDebug() << "---> Step 2";
-
     });
 
     connect(m_portsController, &PortsController::dataReadyForRead, this, &LaserController::onGetBarcode);
@@ -66,6 +61,10 @@ void LaserController::onGetBarcode(const QByteArray &data)
 
     if (data == m_previousBarcodeData) {
         qDebug() << "Duplicate barcode detected. Skipping database insertion.";
+
+        m_trafficlightController->GreenLight();
+        m_scanner->DeactivateScannerRelay();
+
         return;
     }
 
