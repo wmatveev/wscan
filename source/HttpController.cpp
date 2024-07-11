@@ -24,7 +24,7 @@ QNetworkAccessManager* HttpController::getNetworkManager()
 
 void HttpController::SendSignalToDevice(const QString &url)
 {
-    qDebug() << "{url}: " << url;
+//    qDebug() << "{url}: " << url;
 
     QNetworkRequest request(url);
     QNetworkReply *reply = getNetworkManager()->get(request);
