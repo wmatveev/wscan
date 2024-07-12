@@ -25,5 +25,5 @@ void ScanApplication::RunApplication()
         qDebug() << "PollFirstPort call count:" << ++pollCounter;
     });
 
-    timer->start(100);
+    timer->start(10);
 }
