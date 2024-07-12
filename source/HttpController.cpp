@@ -7,6 +7,7 @@
 #include <QNetworkRequest>
 #include <QUrl>
 #include <QByteArray>
+#include <QEventLoop>
 
 
 HttpController::HttpController(QObject *parent)
@@ -22,20 +23,25 @@ QNetworkAccessManager* HttpController::getNetworkManager()
     return &manager;
 }
 
-void HttpController::SendSignalToDevice(const QString &url)
+QByteArray HttpController::SendSignalToDevice(const QString &url)
 {
-//    qDebug() << "{url}: " << url;
-
     QNetworkRequest request(url);
     QNetworkReply *reply = getNetworkManager()->get(request);
 
-    QObject::connect(reply, &QNetworkReply::finished, [reply]() {
-        if (reply->error() == QNetworkReply::NoError) {
-        } else {
-            qDebug() << "Failed to send data:" << reply->errorString();
-        }
-        reply->deleteLater();
-    });
+    QEventLoop eventLoop;
+    QObject::connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
+
+    eventLoop.exec();
+
+    QByteArray responseData;
+    if (reply->error() == QNetworkReply::NoError) {
+        responseData = reply->readAll();
+    } else {
+        qDebug() << "Failed to send data:" << reply->errorString();
+    }
+    reply->deleteLater();
+
+    return responseData;
 }
 
 void HttpController::onRequestFinished(QNetworkReply *reply)
