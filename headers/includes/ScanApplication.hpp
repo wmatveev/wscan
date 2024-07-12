@@ -16,6 +16,9 @@ class ScanApplication : public QObject
         explicit ScanApplication(QObject *parent = nullptr);
 
         void RunApplication();
+
+    private:
+        int pollCounter;
 };
 
 

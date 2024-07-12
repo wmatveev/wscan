@@ -7,7 +7,8 @@
 #include "PortPolling.hpp"
 
 ScanApplication::ScanApplication(QObject *parent)
-        : QObject(parent)
+        : QObject(parent),
+          pollCounter{0}
 {
 
 }
@@ -18,9 +19,8 @@ void ScanApplication::RunApplication()
 
     auto *portPolling = new PortPolling();
     auto *timer = new QTimer(this);
-    int pollCounter = 0;
 
-    connect(timer, &QTimer::timeout, this, [portPolling, &pollCounter]() {
+    connect(timer, &QTimer::timeout, this, [this, portPolling]() {
         portPolling->PollFirstPort();
         qDebug() << "PollFirstPort call count:" << ++pollCounter;
     });
