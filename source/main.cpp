@@ -1,18 +1,14 @@
 #include <QCoreApplication>
 #include "TcpServer.hpp"
 
-#include "TrafficLightController.hpp"
-#include "PortPolling.hpp"
+#include "ScanApplication.hpp"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-//    ITcpServer  *server = new TcpServer();
-
-    PortPolling *portPolling = new PortPolling();
-
-    portPolling->PollFirstPort();
+    ScanApplication app;
+    app.RunApplication();
 
 
     return a.exec();
