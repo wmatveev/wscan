@@ -25,6 +25,7 @@ class ScannerController : public QObject
 
     private:
         HttpController *m_http = nullptr;
+        bool stateScannerRelay;
         QString cmdActivateScanner   = "REL,1,1";
         QString cmdDeactivateScanner = "REL,1,0";
         QString url = "http://192.168.45.195/cmd.cgi?psw=Laurent&cmd=";

@@ -7,7 +7,8 @@
 
 ScannerController::ScannerController(QObject *parent)
         : QObject(parent),
-          m_http{new HttpController}
+          m_http{new HttpController},
+          stateScannerRelay{false}
 {
 }
 
@@ -18,13 +19,21 @@ ScannerController::~ScannerController()
 
 void ScannerController::ActivateScannerRelay()
 {
+    if (stateScannerRelay) {
+        DeactivateScannerRelay();
+    }
+
     qDebug() << "[Relay]: Activated";
     m_http->SendSignalToDevice(url + cmdActivateScanner);
+
+    stateScannerRelay = true;
 }
 
 void ScannerController::DeactivateScannerRelay()
 {
     qDebug() << "[Relay]: Deactivated";
     m_http->SendSignalToDevice(url + cmdDeactivateScanner);
+
+    stateScannerRelay = false;
 }
 
