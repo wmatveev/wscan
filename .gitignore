@@ -34,3 +34,6 @@
 #clion
 .idea
 cmake-buil*
+
+#build
+build
